@@ -1,0 +1,27 @@
+USE employees;
+
+DROP FUNCTION IF EXISTS smallest_employee_salary;
+
+DELIMITER $$
+CREATE FUNCTION smallest_employee_salary (f_emp_no INTEGER) RETURNS DECIMAL(10,2)
+DETERMINISTIC
+
+BEGIN
+	DECLARE lowest_salary DECIMAL(10,2);
+    
+    SELECT 
+		MIN(s.salary) 
+	INTO
+		lowest_salary
+	FROM 
+		employees e
+	JOIN
+		salaries s ON e.emp_no = s.emp_no
+    WHERE
+		e.emp_no = f_emp_no;
+	
+RETURN lowest_salary;
+END $$
+DELIMITER ;
+
+SELECT smallest_employee_salary(11356);
