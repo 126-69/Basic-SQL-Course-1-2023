@@ -1,0 +1,24 @@
+USE employees;
+
+DROP PROCEDURE IF EXISTS find_employee;
+
+DELIMITER $$
+CREATE PROCEDURE find_employee (IN p_emp_no INTEGER)
+BEGIN
+	SELECT
+		e.emp_no,
+		d.dept_no,
+		d.dept_name
+	FROM
+		employees e 
+	JOIN
+		dept_emp de ON e.emp_no = de.emp_no
+	JOIN
+		departments d ON de.dept_no = d.dept_no
+	WHERE
+		e.emp_no = p_emp_no
+		AND de.from_date = (SELECT MAX(from_date) FROM dept_emp WHERE emp_no = p_emp_no);
+END $$
+DELIMITER ;
+
+CALL employees.find_employee(10010);
