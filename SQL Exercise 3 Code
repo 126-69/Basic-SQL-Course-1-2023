@@ -1,0 +1,14 @@
+USE employees;
+
+SELECT
+	e.emp_no,
+    (SELECT MIN(dept_no) FROM dept_emp de WHERE e.emp_no = de.emp_no) AS dept_no,
+    CASE 
+		WHEN emp_no <= 10020 THEN '110022'
+        ELSE '110039'
+	END AS manager
+FROM
+	employees e
+WHERE
+	e.emp_no <= 10040;
+    
