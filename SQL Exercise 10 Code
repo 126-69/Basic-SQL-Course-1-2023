@@ -1,0 +1,37 @@
+USE employees;
+
+DROP FUNCTION IF EXISTS employee_salary;
+
+DELIMITER $$
+CREATE FUNCTION employee_salary (p_emp_no INTEGER, p_max_or_min VARCHAR(10)) RETURNS DECIMAL(10,2)
+DETERMINISTIC
+
+BEGIN
+	DECLARE employee_salary_info DECIMAL(10,2);
+    
+    SELECT
+		CASE
+			WHEN
+				p_max_or_min = 'max'
+			THEN 
+				MAX(s.salary)
+			WHEN 
+				p_max_or_min = 'min'
+			THEN
+				MIN(s.salary)
+			ELSE
+				MAX(s.salary) - MIN(s.salary)
+			END AS salry_info
+	INTO employee_salary_info
+    FROM
+		employees e
+	JOIN
+		salaries s ON e.emp_no = s.emp_no
+	WHERE
+		e.emp_no = p_emp_no;
+        
+RETURN employee_salary_info;
+END $$
+DELIMITER ;
+
+SELECT employee_salary(11356, 'min');
