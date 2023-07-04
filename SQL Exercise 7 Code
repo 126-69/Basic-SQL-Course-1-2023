@@ -1,0 +1,4 @@
+USE employees;
+
+SELECT COUNT(*) FROM salaries
+WHERE DATEDIFF(to_date, from_date) > 365 AND salary >= 100000;
