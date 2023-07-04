@@ -5,3 +5,4 @@ SELECT
     MIN(dept_no) AS min_dept_no
 FROM
 	dept_emp;
+ 
