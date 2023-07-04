@@ -1,0 +1,7 @@
+USE employees;
+
+SELECT
+	MAX(dept_no) AS max_dept_no,
+    MIN(dept_no) AS min_dept_no
+FROM
+	dept_emp;
