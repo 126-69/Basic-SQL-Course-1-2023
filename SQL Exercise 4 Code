@@ -1,0 +1,6 @@
+USE employees;
+
+SELECT * 
+FROM employees
+WHERE YEAR(hire_date) = 2000
+ORDER BY emp_no;
